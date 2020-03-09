@@ -22,9 +22,7 @@ import com.google.api.client.json.Json;
 import com.google.api.client.testing.http.HttpTesting;
 import com.google.api.client.testing.http.MockHttpTransport;
 import com.google.api.client.util.StringUtils;
-
 import junit.framework.TestCase;
-
 
 /**
  * Tests {@link GoogleJsonResponseException}.
@@ -97,7 +95,7 @@ public class GoogleJsonResponseExceptionTest extends TestCase {
 
   public void testFrom_errorNoContentButWithJsonContentType() throws Exception {
     HttpTransport transport = new ErrorTransport("", Json.MEDIA_TYPE);
-      HttpRequest request =
+    HttpRequest request =
         transport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
     request.setThrowExceptionOnExecuteError(false);
     HttpResponse response = request.execute();
@@ -109,7 +107,7 @@ public class GoogleJsonResponseExceptionTest extends TestCase {
 
   public void testFrom_errorEmptyContentButWithJsonContentType() throws Exception {
     HttpTransport transport = new ErrorTransport(null, Json.MEDIA_TYPE);
-      HttpRequest request =
+    HttpRequest request =
         transport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
     request.setThrowExceptionOnExecuteError(false);
     HttpResponse response = request.execute();
@@ -120,7 +118,10 @@ public class GoogleJsonResponseExceptionTest extends TestCase {
   }
 
   public void testFrom_detailsErrorObject() throws Exception {
-    HttpTransport transport = new ErrorTransport("{\"error\": {\"message\": \"invalid_token\"}, \"error_description\": \"Invalid value\"}", Json.MEDIA_TYPE);
+    HttpTransport transport =
+        new ErrorTransport(
+            "{\"error\": {\"message\": \"invalid_token\"}, \"error_description\": \"Invalid value\"}",
+            Json.MEDIA_TYPE);
     HttpRequest request =
         transport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
     request.setThrowExceptionOnExecuteError(false);
@@ -133,7 +134,10 @@ public class GoogleJsonResponseExceptionTest extends TestCase {
   }
 
   public void testFrom_detailsErrorString() throws Exception {
-    HttpTransport transport = new ErrorTransport("{\"error\": \"invalid_token\", \"error_description\": \"Invalid value\"}", Json.MEDIA_TYPE);
+    HttpTransport transport =
+        new ErrorTransport(
+            "{\"error\": \"invalid_token\", \"error_description\": \"Invalid value\"}",
+            Json.MEDIA_TYPE);
     HttpRequest request =
         transport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
     request.setThrowExceptionOnExecuteError(false);
@@ -146,7 +150,8 @@ public class GoogleJsonResponseExceptionTest extends TestCase {
   }
 
   public void testFrom_detailsNoErrorField() throws Exception {
-    HttpTransport transport = new ErrorTransport("{\"error_description\": \"Invalid value\"}", Json.MEDIA_TYPE);
+    HttpTransport transport =
+        new ErrorTransport("{\"error_description\": \"Invalid value\"}", Json.MEDIA_TYPE);
     HttpRequest request =
         transport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
     request.setThrowExceptionOnExecuteError(false);
